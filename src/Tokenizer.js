@@ -1,4 +1,7 @@
 const Spec = [
+    //whitespaces
+    [/^\s+/,null],
+
     [/^\d+/,'NUMBER'],
     [/^"[^"]*"/,'STRING'],
     [/^'[^']*'/,'STRING']
@@ -33,6 +36,11 @@ class Tokenizer {
 
             if(tokenValue == null){
                 continue
+            }
+
+            //whitespace detected
+            if(tokenType == null){
+                return this.getNextToken()
             }
 
             return {
