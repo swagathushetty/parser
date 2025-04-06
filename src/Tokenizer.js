@@ -2,6 +2,12 @@ const Spec = [
     //whitespaces
     [/^\s+/,null],
 
+    //skip single line comment
+    [/^\/\/.*/,null],
+
+    //skip multi line comment
+    [/^\/\*[\s\S]*?\*\//,null],
+
     [/^\d+/,'NUMBER'],
     [/^"[^"]*"/,'STRING'],
     [/^'[^']*'/,'STRING']
