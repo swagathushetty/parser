@@ -1,8 +1,16 @@
 const {Parser} = require('../src/Parser')
-
+const assert = require('assert');
 const parser = new Parser()
 
-const program = `
+const tests = [
+    require('./literals-test.js')
+]
+
+
+//manual test
+function exec(){
+
+    const program = `
             /**
             Document comment
             **/
@@ -15,3 +23,22 @@ const program = `
 const ast = parser.parse(program)
 
 console.log(JSON.stringify(ast,null,2))
+
+}
+
+// exec()
+
+//automated test
+function test(program,expected){
+    const ast = parser.parse(program)
+
+    assert.deepEqual(ast,expected)
+}
+
+
+tests.forEach((testRun)=>{
+    testRun(test)
+})
+
+
+console.log('All assertions passed !!')

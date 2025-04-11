@@ -44,7 +44,7 @@ class Tokenizer {
                 continue
             }
 
-            //whitespace detected
+            //whitespace/comment detected
             if(tokenType == null){
                 return this.getNextToken()
             }
