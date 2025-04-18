@@ -17,7 +17,8 @@ function exec(){
 
             //hello
 
-            "Hello"
+            34;
+            "Hello";
 `
 
 const ast = parser.parse(program)
@@ -26,7 +27,7 @@ console.log(JSON.stringify(ast,null,2))
 
 }
 
-// exec()
+exec()
 
 //automated test
 function test(program,expected){

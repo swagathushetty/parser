@@ -5,6 +5,9 @@ const Spec = [
     //skip single line comment
     [/^\/\/.*/,null],
 
+    //symbols,delimiters
+    [/^;/,';'],
+
     //skip multi line comment
     [/^\/\*[\s\S]*?\*\//,null],
 
