@@ -7,6 +7,8 @@ const Spec = [
 
     //symbols,delimiters
     [/^;/,';'],
+    [/^\{/,'{'],
+    [/^\}/,'}'],
 
     //skip multi line comment
     [/^\/\*[\s\S]*?\*\//,null],

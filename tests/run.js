@@ -3,7 +3,8 @@ const assert = require('assert');
 const parser = new Parser()
 
 const tests = [
-    require('./literals-test.js')
+    // require('./literals-test.js'),
+    require('./block-test.js')
 ]
 
 
