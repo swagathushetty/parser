@@ -3,8 +3,9 @@ const assert = require('assert');
 const parser = new Parser()
 
 const tests = [
-    // require('./literals-test.js'),
-    require('./block-test.js')
+    require('./literals-test.js'),
+    require('./block-test.js'),
+    require('./empty-statement-test.js'),
 ]
 
 
@@ -28,7 +29,7 @@ console.log(JSON.stringify(ast,null,2))
 
 }
 
-exec()
+// exec()
 
 //automated test
 function test(program,expected){

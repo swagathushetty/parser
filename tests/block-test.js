@@ -30,16 +30,45 @@ module.exports = test =>{
         ]
     })
 
-    test(`'hello';`,{
+
+    //nested block test
+    test(`
+        {
+        42;
+            {
+                "grok";
+            }
+        }
+        `,{
         type:'Program',
         body:[
             {
-                type: 'ExpressionStatement',
-                expression:{
-                    type:'StringLiteral',
-                    value:'hello'
-                }
+                type: 'BlockStatement',
+                body:[
+                    {
+                        type: 'ExpressionStatement',
+                        expression:{
+                            type:'NumericLiteral',
+                            value:42
+                        }
+                    },
+                    {
+                        type:'BlockStatement',
+                        body:[
+                            {
+                                type: 'ExpressionStatement',
+                                expression:{
+                                    type:'StringLiteral',
+                                    value:'grok'
+                                }
+                            }
+                        ]
+                    }
+                    
+                ]
             }
         ]
     })
+
+    
 }
