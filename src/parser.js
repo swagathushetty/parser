@@ -1,5 +1,68 @@
 const {Tokenizer} = require('./Tokenizer')
 
+
+const DefaultFactory = {
+    Program(body){
+        return {
+            type:'Program',
+            body
+        }
+    },
+    EmptyStatement(){
+        return {
+            type:'EmptyStatement'
+        }
+    },
+    BlockStatement(body){
+        return {
+            type: 'BlockStatement',
+            body
+        }
+    },
+    ExpressionStatement(expression){
+        return {
+            type : 'ExpressionStatement',
+            expression
+        }
+    },
+    StringLiteral(value){
+        return {
+            type:'StringLiteral',
+            value
+        }
+    },
+    NumericLiteral(value){
+        return {
+            type:'NumericLiteral',
+            value
+        }
+    }
+
+    
+}
+
+const SExpressionFactory = {
+    Program(body){
+        return ['begin',body]
+    },
+    EmptyStatement(){},
+    BlockStatement(){
+        return ['begin',body]
+    },
+    ExpressionStatement(expression){
+        return expression
+    },
+    StringLiteral(value){
+        return `"${value}"`
+    },
+    NumericLiteral(value){
+        return value
+    }   
+}
+
+const AST_NODE = 'default'
+const factory = AST_NODE === 'default' ? DefaultFactory : SExpressionFactory
+
 class Parser {
 
     constructor(){
@@ -22,10 +85,11 @@ class Parser {
 
 
     Program(){
-        return {
-            type:'Program',
-            body: this.StatementList()
-        }
+        // return {
+        //     type:'Program',
+        //     body: this.StatementList()
+        // }
+        return factory.Program(this.StatementList())
     }
 
 
@@ -59,9 +123,7 @@ class Parser {
     EmptyStatement(){
         this._eat(';')
 
-        return {
-            type:'EmptyStatement'
-        }
+        return factory.EmptyStatement()
     }
 
     BlockStatement(){
@@ -71,20 +133,15 @@ class Parser {
 
         this._eat('}')
 
-        return {
-            type: 'BlockStatement',
-            body
-        }
+        return factory.BlockStatement(body)
     }
 
     // format - 'Expression' ';'
     ExpressionStatement(){
         const expression = this.Expression()
         this._eat(';')
-        return {
-            type : 'ExpressionStatement',
-            expression
-        }
+        
+        return factory.ExpressionStatement(expression)
     }
 
     Expression(){
@@ -105,18 +162,22 @@ class Parser {
 
     StringLiteral(){
         const token = this._eat('STRING')
-        return {
-            type:'StringLiteral',
-            value:token.value.slice(1,-1)
-        }
+
+        return factory.StringLiteral(token.value.slice(1,-1))
+        // return {
+        //     type:'StringLiteral',
+        //     value:token.value.slice(1,-1)
+        // }
+
     }
 
     NumericLiteral(){
         const token = this._eat('NUMBER')
-        return {
-            type:'NumericLiteral',
-            value:Number(token.value)
-        }
+        return factory.NumericLiteral(Number(token.value))
+        // return {
+        //     type:'NumericLiteral',
+        //     value:Number(token.value)
+        // }
     }
     _eat(tokenType){
         const token = this._lookahead

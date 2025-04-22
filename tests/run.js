@@ -29,7 +29,7 @@ console.log(JSON.stringify(ast,null,2))
 
 }
 
-// exec()
+exec()
 
 //automated test
 function test(program,expected){
