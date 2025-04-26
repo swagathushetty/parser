@@ -6,6 +6,7 @@ const tests = [
     require('./literals-test.js'),
     require('./block-test.js'),
     require('./empty-statement-test.js'),
+    require('./math-test.js'),
 ]
 
 
@@ -19,7 +20,7 @@ function exec(){
 
             //hello
 
-            34;
+            22+22+22+34;
             "Hello";
 `
 
