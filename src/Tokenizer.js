@@ -9,12 +9,15 @@ const Spec = [
     [/^;/,';'],
     [/^\{/,'{'],
     [/^\}/,'}'],
+    [/^\(/,'('],
+    [/^\)/,')'],
 
     //skip multi line comment
     [/^\/\*[\s\S]*?\*\//,null],
 
     //math operators
     [/^[+\-]/,'ADDITIVE_OPERATOR'],
+    [/^[*\/]/,'MULTIPLICATIVE_OPERATOR'],
 
     [/^\d+/,'NUMBER'],
     [/^"[^"]*"/,'STRING'],

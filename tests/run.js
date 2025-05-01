@@ -20,8 +20,7 @@ function exec(){
 
             //hello
 
-            22+22+22+34;
-            "Hello";
+            (2+2) * 2;
 `
 
 const ast = parser.parse(program)
