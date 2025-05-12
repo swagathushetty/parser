@@ -12,6 +12,13 @@ const Spec = [
     [/^\(/,'('],
     [/^\)/,')'],
 
+    [/^\d+/,'NUMBER'],
+    [/^\w+/,'IDENTIFIER'],
+
+    //assignment operators +=,-=,/=,*=,= 
+    [/^=/,'SIMPLE_ASSIGN'],
+    [/^[\*\/\+\-]=/,'COMPLEX_ASSIGN'],
+
     //skip multi line comment
     [/^\/\*[\s\S]*?\*\//,null],
 
@@ -19,7 +26,7 @@ const Spec = [
     [/^[+\-]/,'ADDITIVE_OPERATOR'],
     [/^[*\/]/,'MULTIPLICATIVE_OPERATOR'],
 
-    [/^\d+/,'NUMBER'],
+   
     [/^"[^"]*"/,'STRING'],
     [/^'[^']*'/,'STRING']
 ]

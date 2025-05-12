@@ -7,6 +7,7 @@ const tests = [
     require('./block-test.js'),
     require('./empty-statement-test.js'),
     require('./math-test.js'),
+    require('./assignment-test.js')
 ]
 
 
@@ -20,7 +21,7 @@ function exec(){
 
             //hello
 
-            (2+2) * 2;
+            x = 42;
 `
 
 const ast = parser.parse(program)

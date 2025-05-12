@@ -89,9 +89,60 @@ class Parser {
     }
 
     Expression(){
-        return this.AdditiveExpression()
+        return this.AssignmentExpression()
     }
 
+    AssignmentExpression(){
+        const left = this.AdditiveExpression()
+
+        //if assignment expression doesnt exist return left
+        if(!this._isAssignmentOperator(this._lookahead.type)){
+            return left
+        }
+
+        /** 
+        right:this.AssignmentExpression() handles the right-associativity of assignment operators. 
+        Right-associativity means that when you have multiple assignments like a = b = c = 10, 
+        they are evaluated from right to left, essentially as a = (b = (c = 10)).
+
+        */
+        return {
+            type:'AssignmentExpression',
+            operator:this.AssignmentOperator().value,
+            left:this._checkValidAssignmentTarget(left),
+            right:this.AssignmentExpression()
+        }
+    }
+    _isAssignmentOperator(tokenType){
+        return tokenType === 'SIMPLE_ASSIGN' || tokenType === 'COMPLEX_ASSIGN'
+    }
+
+    LeftHandSideExpression(){
+        return this.Identifier()
+    }
+
+    Identifier(){
+        const name = this._eat('IDENTIFIER').value
+        return {
+            type:'Identifier',
+            name
+        }
+    }
+
+    _checkValidAssignmentTarget(node){
+        if(node.type == 'Identifier'){
+            return node
+        }
+
+        throw new SyntaxError('Invalid LHS in assigment expression')
+    }
+
+    AssignmentOperator(){
+        if(this._lookahead.type == 'SIMPLE_ASSIGN'){
+            return this._eat('SIMPLE_ASSIGN')
+        }
+        return this._eat('COMPLEX_ASSIGN')
+    }
     //Additive expression
     AdditiveExpression(){
 
@@ -128,12 +179,22 @@ class Parser {
     }
 
     PrimaryExpression(){
+        
+        if(this._isLiteral(this._lookahead.type)){
+            return this.Literal()
+        }
+
+
         switch(this._lookahead.type){
             case '(':
                 return this.ParenthesizedExpression()
             default:
-                return this.Literal()
+                return this.LeftHandSideExpression()
         }
+    }
+
+    _isLiteral(tokenType){
+        return tokenType === 'NUMBER' || tokenType === 'STRING'        
     }
     /**
         '(' Expression ')'
@@ -153,6 +214,7 @@ class Parser {
             case 'STRING':
                 return this.StringLiteral()
         }
+        console.log(this._lookahead.type)
         throw new SyntaxError(`Literal: unexpected literal production`)
     }
 
