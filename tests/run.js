@@ -7,7 +7,8 @@ const tests = [
     require('./block-test.js'),
     require('./empty-statement-test.js'),
     require('./math-test.js'),
-    require('./assignment-test.js')
+    require('./assignment-test.js'),
+    require('./variable-test.js')
 ]
 
 
@@ -21,7 +22,7 @@ function exec(){
 
             //hello
 
-            x = 42;
+           x = y = 42;
 `
 
 const ast = parser.parse(program)
@@ -35,6 +36,7 @@ exec()
 //automated test
 function test(program,expected){
     const ast = parser.parse(program)
+
 
     assert.deepEqual(ast,expected)
 }
